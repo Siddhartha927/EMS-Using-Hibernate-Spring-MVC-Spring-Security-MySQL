@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Add Client</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <a class="navbar-brand" href="#">Add Client</a>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav">
+            </ul>
+        </div>
+    </nav>
+
+    <div class="container mt-4">
+        <a th:href="@{/adminDashboard}" class="btn btn-secondary">Back to Dashboard</a>
+        <h2 class="text-center">Add New Client</h2>
+
+        <!-- Success Message -->
+        <div th:if="${successMessage}" class="alert alert-success">
+            <p th:text="${successMessage}"></p>
+        </div>
+        
+        <div th:if="${errorMessage}" class="alert alert-danger">
+    		<p th:text="${errorMessage}"></p>
+		</div>
+
+        <form th:action="@{/adminDashboard/addClient}" th:object="${client}" method="post">
+            <div class="form-group">
+                <label>Client Name:</label>
+                <input type="text" th:field="*{clientName}" class="form-control" required>
+            </div>
+
+
+            <button type="submit" class="btn btn-primary">Add Client</button>
+        </form>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Update Project</title>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+
+<!-- Navigation Bar -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <a class="navbar-brand" href="#">Update Project</a>
+</nav>
+
+<div class="container mt-5">
+    <!-- Back Button -->
+    <a th:href="@{/adminDashboard}" class="btn btn-secondary mb-3">Back to Dashboard</a>
+
+    <!-- Heading -->
+    <h2 class="text-center mb-4">Update Project Information</h2>
+
+    <!-- Success Message -->
+    <div th:if="${successMessage}" class="alert alert-success" th:text="${successMessage}"></div>
+
+    <!-- Error Message -->
+    <div th:if="${errorMessage}" class="alert alert-danger" th:text="${errorMessage}"></div>
+
+    <!-- Update Project Form -->
+    <form th:action="@{/adminDashboard/updateProject}" method="post">
+        <input type="hidden" name="projectId" th:value="${project.projectId}" />
+
+        <div class="form-group">
+            <label>Project Name</label>
+            <input type="text" name="projectName" class="form-control" th:value="${project.projectName}" required>
+        </div>
+		<div class="form-group">
+    		<label>End Date</label>
+    		<input type="date" name="startDate" class="form-control"
+           th:value="${#temporals.format(project.startDate, 'yyyy-MM-dd')}" readonly>
+    	</div>
+       
+        <div class="form-group">
+    		<label>End Date</label>
+    		<input type="date" name="endDate" class="form-control"
+           th:value="${#temporals.format(project.endDate, 'yyyy-MM-dd')}" readonly>
+    	</div>
+		
+		<div class="form-group">
+    		<label>End Date</label>
+    		<input type="date" name="updatedEndDate" class="form-control"
+           th:value="${#temporals.format(project.updatedEndDate, 'yyyy-MM-dd')}">
+    	</div>
+
+        <!-- You can include client dropdown or read-only info here if needed -->
+
+        <button type="submit" class="btn btn-success mt-3">Update Project</button>
+    </form>
+</div>
+
+</body>
+</html>

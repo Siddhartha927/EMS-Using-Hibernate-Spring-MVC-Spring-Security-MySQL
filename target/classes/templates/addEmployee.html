@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Add Employee</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+	 
+
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <a class="navbar-brand" href="#">Add Employee</a>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav">
+               
+            </ul>
+        </div>
+    </nav>
+
+    <div class="container mt-4">
+    	 <a th:href="@{/adminDashboard}" class="btn btn-secondary">Back to Dashboard</a>
+        <h2 class="text-center">Add New Employee</h2>
+
+        <!-- Success Message -->
+        <div th:if="${successMessage}" class="alert alert-success">
+            <p th:text="${successMessage}"></p>
+        </div>
+
+        <form th:action="@{/adminDashboard/add}" th:object="${employee}" method="post">
+            <div class="form-group">
+                <label>Name:</label>
+                <input type="text" th:field="*{name}" class="form-control" required>
+            </div>
+
+            <div class="form-group">
+                <label>Department:</label>
+                <input type="text" th:field="*{department}" class="form-control" required>
+            </div>
+
+            <div class="form-group">
+                <label>Email:</label>
+                <input type="email" th:field="*{email}" class="form-control" required>
+                 <p th:if="${#fields.hasErrors('email')}" th:errors="*{email}" class="text-danger"></p>
+                  <div th:if="${errorMessage}" style="color: red; font-weight: bold;">
+        <p th:text="${errorMessage}"></p>
+    </div>
+            </div>
+
+            <div class="form-group">
+                <label>Phone:</label>
+                <input type="text" th:field="*{phone}" class="form-control" required>
+            </div>
+			
+            
+            <button type="submit" class="btn btn-primary">Add Employee</button>
+        </form>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+</body>
+</html>

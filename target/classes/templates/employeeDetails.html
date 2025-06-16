@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Employee Details</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
+    <style>
+        .employee-header {
+            background: linear-gradient(135deg, #3a7bd5, #00d2ff);
+            color: white;
+        }
+        .detail-card {
+            border-left: 4px solid #3a7bd5;
+        }
+        .project-badge {
+            font-size: 0.9rem;
+            padding: 0.35em 0.65em;
+        }
+    </style>
+</head>
+<body class="bg-light">
+
+<div class="container mt-4">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <a th:href="@{/adminDashboard}" class="btn btn-outline-secondary">
+            <i class="bi bi-arrow-left"></i> Back to Dashboard
+        </a>
+        <h3 class="mb-0 text-primary">Employee Details</h3>
+    </div>
+
+    <!-- Success/Error Messages -->
+    <div th:if="${successMessage}" class="alert alert-success alert-dismissible fade show">
+        <span th:text="${successMessage}"></span>
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+    </div>
+    <div th:if="${errorMessage}" class="alert alert-danger alert-dismissible fade show">
+        <span th:text="${errorMessage}"></span>
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+    </div>
+
+    <!-- Search Form -->
+    <div class="card shadow-sm mb-4">
+        <div class="card-body">
+            <form th:action="@{/adminDashboard/employeesearch}" method="post" class="row g-3">
+                <div class="col-md-8">
+                    <label for="employeeId" class="form-label">Search Employee</label>
+                    <div class="input-group">
+                        <span class="input-group-text"><i class="bi bi-person-badge"></i></span>
+                        <input type="text" id="employeeId" name="employeeId" class="form-control" 
+                               placeholder="Enter Employee ID (e.g. JTC-001)" required>
+                    </div>
+                </div>
+                <div class="col-md-4 d-flex align-items-end">
+                    <button type="submit" class="btn btn-primary w-100">
+                        <i class="bi bi-search"></i> Search
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Employee Details Card -->
+    <div th:if="${employee != null}">
+        <div class="card shadow mb-4">
+            <div class="card-header employee-header py-3">
+                <div class="d-flex justify-content-between align-items-center">
+                    <h5 class="card-title mb-0" th:text="${employee.name}"></h5>
+                    <span class="badge bg-light text-dark fs-6" th:text="${employee.employeeId}"></span>
+                </div>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="card detail-card mb-3">
+                            <div class="card-body">
+                                <h6 class="card-subtitle mb-2 text-muted">Basic Information</h6>
+                                <p class="mb-1"><strong>Department:</strong> <span th:text="${employee.department}"></span></p>
+                                <p class="mb-1"><strong>Email:</strong> <span th:text="${employee.email}"></span></p>
+                                <p class="mb-1"><strong>Phone:</strong> <span th:text="${employee.phone}"></span></p>
+                                <p class="mb-0"><strong>Joined:</strong> 
+                                    <span th:text="${#temporals.format(employee.dateOfJoining, 'MMMM dd, yyyy')}"></span>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="col-md-6">
+                        <div class="card detail-card">
+                            <div class="card-body">
+                                <h6 class="card-subtitle mb-2 text-muted">Project Assignment</h6>
+                                <div th:if="${employee.project != null}">
+                                    <div class="d-flex justify-content-between align-items-center mb-2">
+                                        <span class="fw-bold">Currently assigned to:</span>
+                                        <span class="badge bg-success project-badge" th:text="${employee.project.projectId}"></span>
+                                    </div>
+                                    
+                                    <button class="btn btn-sm btn-outline-primary mb-2" type="button" 
+                                            data-bs-toggle="collapse" data-bs-target="#projectDetails">
+                                        <i class="bi bi-chevron-down"></i> Project Details
+                                    </button>
+                                    
+                                    <div class="collapse" id="projectDetails">
+                                        <div class="card card-body bg-light p-2 mb-2">
+                                            <p class="mb-1"><strong>Project Name:</strong> 
+                                                <span th:text="${employee.project.projectName}"></span>
+                                            </p>
+                                            <p class="mb-1"><strong>Start Date:</strong> 
+                                                <span th:text="${#temporals.format(employee.project.startDate, 'MMMM dd, yyyy')}"></span>
+                                            </p>
+                                            <p class="mb-1"><strong>End Date:</strong> 
+                                                <span th:text="${#temporals.format(employee.project.endDate, 'MMMM dd, yyyy')}"></span>
+                                            </p>
+                         
+                                        </div>
+                                    </div>
+                                    
+                                    <form th:action="@{/adminDashboard/remove-from-project/{employeeId}(employeeId=${employee.employeeId})}" 
+                                          method="get" class="mt-2">
+                                        <button type="submit" class="btn btn-sm btn-outline-danger">
+                                            <i class="bi bi-x-circle"></i> Remove from Project
+                                        </button>
+                                    </form>
+                                </div>
+                                
+                                <div th:unless="${employee.project != null}" class="text-center py-3">
+                                    <p class="text-muted mb-3">Currently on bench</p>
+                                    <a th:href="@{/adminDashboard/assign-project/{employeeId}(employeeId=${employee.employeeId})}" 
+                                       class="btn btn-sm btn-outline-success">
+                                        <i class="bi bi-plus-circle"></i> Assign to Project
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Action Buttons -->
+                <div class="d-flex justify-content-end mt-4 border-top pt-3">
+                    <a th:href="@{/adminDashboard/update-employee/{employeeId}(employeeId=${employee.employeeId})}" 
+                       class="btn btn-primary me-2">
+                        <i class="bi bi-pencil"></i> Update Profile
+                    </a>
+                    <a th:href="@{/adminDashboard/delete/{employeeId}(employeeId=${employee.employeeId})}" 
+                       class="btn btn-danger"
+                       onclick="return confirm('Are you sure you want to delete this employee?');">
+                        <i class="bi bi-trash"></i> Delete Employee
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Employee Dashboard</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
+    <style>
+        .detail-card {
+            transition: all 0.3s ease;
+        }
+        .detail-card:hover {
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav class="navbar bg-primary navbar-dark">
+        <div class="container-fluid">
+            <span class="navbar-brand">
+                <i class="bi bi-person-badge"></i> Employee Portal
+            </span>
+            <a class="btn btn-danger btn-sm" th:href="@{/logout}">
+                <i class="bi bi-box-arrow-right"></i> Logout
+            </a>
+        </div>
+    </nav>
+
+    <div class="container mt-4">
+        <!-- Welcome Message -->
+        <div class="alert alert-info">
+            <h4>Welcome <span th:text="${employee?.name ?: 'User'}">User</span></h4>
+            <p>Select an option below to view details</p>
+        </div>
+
+        <!-- Collapsible Employee Details -->
+        <div class="mb-3">
+            <button class="btn btn-primary w-100 text-start" type="button" 
+                    data-bs-toggle="collapse" data-bs-target="#employeeDetails">
+                <i class="bi bi-person"></i> My Details
+            </button>
+            <div class="collapse mt-2" id="employeeDetails">
+                <div class="card card-body detail-card">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <p><strong>Employee ID:</strong> <span th:text="${employee?.employeeId}">EMP001</span></p>
+                            <p><strong>Name:</strong> <span th:text="${employee?.name}">John Doe</span></p>
+                            <p><strong>Email:</strong> <span th:text="${employee?.email}">john.doe@example.com</span></p>
+                        </div>
+                        <div class="col-md-6">
+                            <p><strong>Phone:</strong> <span th:text="${employee?.phone}">(123) 456-7890</span></p>
+                            <p><strong>Joining Date:</strong> <span th:text="${#temporals.format(employee?.dateOfJoining, 'dd-MMM-yyyy')}">15-Jan-2023</span></p>
+                            <p><strong>Department:</strong> <span th:text="${employee?.department}">Engineering</span></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Collapsible Project Details -->
+        <div class="mb-3">
+            <button class="btn btn-primary w-100 text-start" type="button" 
+                    data-bs-toggle="collapse" data-bs-target="#projectDetails">
+                <i class="bi bi-folder"></i> My Project
+            </button>
+            <div class="collapse mt-2" id="projectDetails">
+                <div class="card card-body detail-card">
+                    <div th:if="${employee?.project != null}">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <p><strong>Project ID:</strong> <span th:text="${employee.project.projectId}">PRJ1001</span></p>
+                                <p><strong>Project Name:</strong> <span th:text="${employee.project.projectName}">HR Management System</span></p>
+                                <p><strong>Start Date:</strong> <span th:text="${#temporals.format(employee.project.startDate, 'dd-MMM-yyyy')}">15-Jan-2023</span></p>
+                            </div>
+                            <div class="col-md-6">
+                                <p><strong>End Date:</strong> <span th:text="${#temporals.format(employee.project.endDate, 'dd-MMM-yyyy')}">30-Jun-2023</span></p>
+                                <p><strong>Updated Deadline:</strong> 
+                                    <span th:if="${employee.project.updatedEndDate != null}" th:text="${#temporals.format(employee.project.updatedEndDate, 'dd-MMM-yyyy')}">30-Jul-2023</span>
+                                    <span th:unless="${employee.project.updatedEndDate != null}">Not updated</span>
+                                </p>
+                                
+                            </div>
+                        </div>
+                    </div>
+                    <div th:unless="${employee?.project != null}" class="text-center text-muted">
+                        <i class="bi bi-exclamation-circle fs-1"></i>
+                        <p class="mt-2">No project assigned yet</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS Bundle with Popper (required for collapsible functionality) -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Add Contact Person</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <a class="navbar-brand" href="#">Add Contact Person</a>
+    </nav>
+
+    <div class="container mt-4">
+     <a th:href="@{/adminDashboard/clients}" clss="btn btn-secondary">Back Client Details</a>
+        <h2 class="text-center">Add New Contact Person</h2>
+
+        <!-- Success Message -->
+        <div th:if="${successMessage}" class="alert alert-success">
+            <p th:text="${successMessage}"></p>
+        </div>
+
+        <!-- Error Message -->
+        <div th:if="${errorMessage}" class="alert alert-danger">
+            <p th:text="${errorMessage}"></p>
+        </div>
+
+        <form th:action="@{'/adminDashboard/addContactPerson/' + ${clientId}}" method="post">
+         <input type="hidden" name="clientId" th:value="${clientId}" />
+            <div class="form-group">
+                <label>Name</label>
+                <input type="text" name="name" class="form-control" required>
+            </div>
+            <div class="form-group">
+                <label>Email</label>
+                <input type="email" name="email" class="form-control" required>
+            </div>
+            <div class="form-group">
+                <label>Phone</label>
+                <input type="text" name="phone" class="form-control" required>
+            </div>
+            <div class="form-group">
+                <label>Designation</label>
+                <input type="text" name="designation" class="form-control" required>
+            </div>
+            <button type="submit" class="btn btn-primary">Add Contact</button>
+        </form>
+    </div>
+</body>
+</html>

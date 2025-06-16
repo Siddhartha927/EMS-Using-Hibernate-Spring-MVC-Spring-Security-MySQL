@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?>  <!-- Defines XML version and encoding -->
+
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>  <!-- Specifies the Maven model version -->
+
+	<!-- Parent POM for Spring Boot applications -->
+	<parent>
+		<groupId>org.springframework.boot</groupId>
+		<artifactId>spring-boot-starter-parent</artifactId>
+		<version>3.4.4</version>  <!-- Spring Boot version -->
+		<relativePath/>  <!-- Inherits default configurations from Spring Boot parent -->
+	</parent>
+
+	<!-- Project details -->
+	<groupId>com.ems</groupId>  <!-- Defines the group ID (package name convention) -->
+	<artifactId>Employee_Management_System</artifactId>  <!-- Defines the project name -->
+	<version>0.0.1-SNAPSHOT</version>  <!-- Version of the application -->
+	<name>Employee_Management_System</name>  <!-- Project name -->
+	<description> project for Spring Boot</description>  <!-- Description of the project -->
+	<url/>  <!-- Placeholder for project URL -->
+
+	<!-- License information -->
+	<licenses>
+		<license/>
+	</licenses>
+
+	<!-- Developer information -->
+	<developers>
+		<developer/>
+	</developers>
+
+	<!-- Source Control Management (SCM) details -->
+	<scm>
+		<connection/>
+		<developerConnection/>
+		<tag/>
+		<url/>
+	</scm>
+
+	<!-- Java version configuration -->
+	<properties>
+		<java.version>21</java.version>  <!-- Specifies Java 21 as the project version -->
+	</properties>
+
+	<!-- Dependencies section -->
+	<dependencies>
+		<!-- Spring Boot JPA for database interactions -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-data-jpa</artifactId>
+		</dependency>
+
+		<!-- Spring Security dependency -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-security</artifactId>
+		</dependency>
+
+		<!-- Spring Boot Thymeleaf for UI templates -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-thymeleaf</artifactId>
+		</dependency>
+
+		<!-- Spring Boot Web for building REST APIs and MVC applications -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-web</artifactId>
+		</dependency>
+		
+		<!-- Spring Boot DevTools for automatic restart during development -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-devtools</artifactId>
+			<scope>runtime</scope>  <!-- Available only at runtime -->
+			<optional>true</optional>  <!-- Optional dependency -->
+		</dependency>
+
+		<!-- MySQL Connector for database connectivity -->
+		<dependency>
+			<groupId>com.mysql</groupId>
+			<artifactId>mysql-connector-j</artifactId>
+			<scope>runtime</scope>  <!-- Only required at runtime -->
+		</dependency>
+		
+		<!-- Tomcat Jasper for JSP rendering -->
+		<dependency>
+        	<groupId>org.apache.tomcat.embed</groupId>
+        	<artifactId>tomcat-embed-jasper</artifactId>
+    	</dependency>
+
+    	<!-- JSTL (JavaServer Pages Standard Tag Library) for JSP support -->
+    	<dependency>
+    		<groupId>javax.servlet</groupId>
+    		<artifactId>jstl</artifactId>
+    		<version>1.2</version>  <!-- ✅ Specify version -->
+    		<scope>provided</scope>  <!-- Provided at runtime by the container -->
+    	</dependency>
+
+	</dependencies>
+
+	<!-- Build section -->
+	<build>
+    	<plugins>
+        	<!-- Maven Compiler Plugin for Java compilation settings -->
+        	<plugin>
+            	<groupId>org.apache.maven.plugins</groupId>
+            	<artifactId>maven-compiler-plugin</artifactId>
+            	<version>3.8.1</version>  <!-- Compiler plugin version -->
+            	<configuration>
+                	<source>21</source>  <!-- Java source compatibility -->
+                	<target>21</target>  <!-- Java target compatibility -->
+                	<compilerArgs>
+                    	<arg>-parameters</arg>  <!-- Enables parameter name retention for reflection -->
+                	</compilerArgs>
+            	</configuration>
+        	</plugin>
+    	</plugins>
+	</build>
+
+</project>
+
