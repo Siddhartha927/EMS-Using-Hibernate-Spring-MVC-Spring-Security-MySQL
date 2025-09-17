@@ -42,5 +42,9 @@ public class ClientController {
      // Returns the name of the Thymeleaf view to render (clientDashboard.html)
      return "clientDashboard";
  }
+ 
+ public String dummy() {
+	 return null;
+ }
 }
 

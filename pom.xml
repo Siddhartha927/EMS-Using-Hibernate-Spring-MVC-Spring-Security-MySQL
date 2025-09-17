@@ -15,7 +15,7 @@
 	<!-- Project details -->
 	<groupId>com.ems</groupId>  <!-- Defines the group ID (package name convention) -->
 	<artifactId>Employee_Management_System</artifactId>  <!-- Defines the project name -->
-	<version>0.0.1-SNAPSHOT</version>  <!-- Version of the application -->
+	<version>0.0.2-SNAPSHOT</version>  <!-- Version of the application -->
 	<name>Employee_Management_System</name>  <!-- Project name -->
 	<description> project for Spring Boot</description>  <!-- Description of the project -->
 	<url/>  <!-- Placeholder for project URL -->
